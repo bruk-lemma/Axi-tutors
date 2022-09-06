@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+body{
+  background-image: url("/src/screens/pexels-moose-photos-1037992.jpg");
+}
