@@ -1,0 +1,51 @@
+<div className='products'>
+  <div className='subject' id='mathematics'>
+    <h3 className='title'>Mathematics</h3>
+    <p className='description'></p>
+    <div className='logo'></div>
+  </div>
+  <div className='subject' id='language'>
+    <h3 className='title'>Languages</h3>
+    <p className='description'></p>
+    <div className='logo'></div>
+  </div>
+  <div className='subject' id='physics'>
+    <h3 className='title'>Physics</h3>
+    <p className='description'></p>
+    <div className='logo'></div>
+  </div>
+
+  <div className='subject' id='chemistry'>
+    <h3 className='title'>Chemistry</h3>
+    <p className='description'></p>
+    <div className='logo'></div>
+  </div>
+
+  <div className='subject' id='biology'>
+    <h3 className='title'>Biology</h3>
+    <p className='description'></p>
+    <div className='logo'></div>
+  </div>
+  <div className='subject' id='history'>
+    <h3 className='title'>History</h3>
+    <p className='description'></p>
+    <div className='logo'></div>
+  </div>
+
+  <div className='subject' id='geography'>
+    <h3 className='title'>geography</h3>
+    <p className='description'></p>
+    <div className='logo'></div>
+  </div>
+
+  <div className='subject' id='art'>
+    <h3 className='title'>Art</h3>
+    <p className='description'></p>
+    <div className='logo'></div>
+  </div>
+  <div className='subject' id='music'>
+    <h3 className='title'>Music</h3>
+    <p className='description'></p>
+    <div className='logo'></div>
+  </div>
+</div>;

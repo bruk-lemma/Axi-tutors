@@ -1,21 +1,28 @@
 import logo from "./logo.svg";
 import "./App.css";
 import {Container} from "react-bootstrap";
-import HomeScreen from "./screens/HomeScreen";
-import {RegisterScreen} from "./screens/RegisterScreen ";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import Header from "./components/header";
+import ClientRegisterScreen from "./screens/ClientRegisterScreen.js";
+import TeacherRegisterScreen from "./screens/TeacherRegisterScreen";
+import Hero from "./components/Hero.js";
+import Features from "./components/features.js";
+import SignIn from "./components/SignIn.js";
+import Header from "./components/header.js";
+import MenuNav from "./components/Menu.js";
+import AdminDashBoard from "./screens/AdminDashBoard";
 
 function App() {
   return (
     <Router>
-      <Header />
-      <Container>
-        <Routes>
-          <Route path='/' element={<HomeScreen />} />
-          <Route path='/register' element={<RegisterScreen />} />
-        </Routes>
-      </Container>
+      <MenuNav />
+      <main className='py-3'>
+        <Container>
+          <Routes>
+            <Route exact path='/' element={<AdminDashBoard />} />
+            <Route exact path='/register' element={<ClientRegisterScreen />} />
+          </Routes>
+        </Container>
+      </main>
     </Router>
   );
 }
