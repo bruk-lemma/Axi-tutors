@@ -1,6 +1,47 @@
-import React from "react";
-
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useLocation, useNavigate} from "react-router-dom";
+import {registerClient} from "../actions/clientActions.js";
 const ClientRegisterScreen = () => {
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [phone_number, setPhoneNumber] = useState();
+  const [email, setEmail] = useState("");
+  const [city, setCity] = useState("");
+  const [sub_city, setSubCity] = useState("");
+  const [child_gender, setChildGender] = useState("");
+  const [child_grade, setChildGrade] = useState("");
+
+  const dispatch = useDispatch();
+  const clientRegister = useSelector((state) => state.clientRegister);
+  const {loading, error, clientRegisterInfo} = clientRegister;
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (clientRegisterInfo) {
+      navigate();
+    }
+  }, [navigate, clientRegisterInfo, location]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(
+      registerClient(
+        first_name,
+        last_name,
+        email,
+        phone_number,
+        city,
+        sub_city,
+        child_gender,
+        child_grade
+      )
+    );
+    console.log("client Registered...");
+  };
+
   return (
     <div>
       <div className='phot hidden sm:block' aria-hidden='true'>
@@ -21,7 +62,7 @@ const ClientRegisterScreen = () => {
             </div>
           </div>
           <div className='mt-5 md:col-span-2 md:mt-0'>
-            <form action='#' method='POST'>
+            <form onSubmit={submitHandler} action='#' method='POST'>
               <div className='overflow-hidden shadow sm:rounded-md'>
                 <div className='bg-white px-4 py-8 sm:p-6'>
                   <div className='grid grid-cols-6 gap-6'>
@@ -37,6 +78,8 @@ const ClientRegisterScreen = () => {
                         name='first-name'
                         id='first-name'
                         autoComplete='given-name'
+                        value={first_name}
+                        onChange={(e) => setFirstName(e.target.value)}
                         className='mt-1 block w-full py-2 rounded-md border border-gray-500 focus:outline-blue-500 shadow-sm  focus: md:text-sm'
                       />
                     </div>
@@ -51,6 +94,9 @@ const ClientRegisterScreen = () => {
                       <input
                         type='text'
                         name='last-name'
+                        required
+                        value={last_name}
+                        onChange={(e) => setLastName(e.target.value)}
                         id='last-name'
                         autoComplete='family-name'
                         className='mt-1 block w-full py-2 rounded-md border border-gray-500 focus:outline-blue-500 shadow-sm  focus: md:text-sm'
@@ -69,6 +115,9 @@ const ClientRegisterScreen = () => {
                         name='email-address'
                         id='email-address'
                         autoComplete='email'
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         className='mt-1 block w-full py-2 rounded-md border border-gray-500 focus:outline-blue-500 shadow-sm  focus: md:text-sm'
                       />
                     </div>
@@ -84,6 +133,9 @@ const ClientRegisterScreen = () => {
                         type='text'
                         name='city'
                         id='city'
+                        required
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
                         autoComplete='family-name'
                         className='mt-1 block w-full py-2 rounded-md border border-gray-500 focus:outline-blue-500 shadow-sm  focus: md:text-sm'
                       />
@@ -100,6 +152,9 @@ const ClientRegisterScreen = () => {
                         type='text'
                         name='subcity'
                         id='subcity'
+                        required
+                        value={sub_city}
+                        onChange={(e) => setSubCity(e.target.value)}
                         autoComplete='family-name'
                         className='mt-1 block w-full py-2 rounded-md border border-gray-500 focus:outline-blue-500 shadow-sm  focus: md:text-sm'
                       />
@@ -116,6 +171,9 @@ const ClientRegisterScreen = () => {
                         type='text'
                         name='phone-number'
                         id='phone-number'
+                        required
+                        value={phone_number}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
                         autoComplete='phone-number'
                         className='mt-1 block w-full py-2 rounded-md border border-gray-500 focus:outline-blue-500 shadow-sm  focus: md:text-sm'
                       />
@@ -131,12 +189,17 @@ const ClientRegisterScreen = () => {
                       <select
                         id='child-grade'
                         name='child-grade'
+                        required
+                        value={child_grade}
+                        onChange={(e) => setChildGrade(e.target.value)}
                         autoComplete='child-grade'
                         className='mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
                       >
-                        <option>Primary-school</option>
-                        <option>Secondary-school</option>
-                        <option>Pre-colledge</option>
+                        <option value='Primary-school'>Primary-school</option>
+                        <option value='Secondary-school'>
+                          Secondary-school
+                        </option>
+                        <option value='Pre-colledge'>Pre-colledge</option>
                       </select>
                     </div>
 
@@ -151,10 +214,12 @@ const ClientRegisterScreen = () => {
                         id='child-gender'
                         name='child-gender'
                         autoComplete='child-gender'
+                        required
+                        onChange={(e) => setChildGender(e.target.value)}
                         className='mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
                       >
-                        <option>Male</option>
-                        <option>Female</option>
+                        <option value='male'>Male</option>
+                        <option value={"female"}>Female</option>
                       </select>
                     </div>
                   </div>

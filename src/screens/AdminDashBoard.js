@@ -5,6 +5,7 @@ import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {listClients} from "../actions/clientActions.js";
 //import {Table} from "react-bootstrap";
+import Loader from "../components/Loader.js";
 
 const AdminDashBoard = () => {
   const columns = [
@@ -119,7 +120,7 @@ const AdminDashBoard = () => {
       title: "phone_number",
       dataIndex: "phone_number",
       key: "phone_number",
-      render: (text) => <a>{text}</a>,
+      render: (text) => <a>+{text}</a>,
     },
     {
       title: "child_grade",
@@ -191,7 +192,7 @@ const AdminDashBoard = () => {
     </div>*/
     <div>
       {loading ? (
-        <h2>Loading...</h2>
+        <Loader />
       ) : error ? (
         <h3>{error}</h3>
       ) : (
