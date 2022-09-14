@@ -61,7 +61,6 @@ const Hero = () => {
           />
         </div>
       </div>
-      <AdminDashBoard />
     </Container>
   );
 };

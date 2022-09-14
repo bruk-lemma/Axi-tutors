@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "antd/dist/antd.css";
 import {Col, Row, Space, Table, Tag} from "antd";
 import {useEffect} from "react";
@@ -6,8 +6,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {listClients} from "../actions/clientActions.js";
 //import {Table} from "react-bootstrap";
 import Loader from "../components/Loader.js";
+import Message from "../components/Message.js";
 
 const AdminDashBoard = () => {
+  const [message, setMessage] = useState(null);
+
   const columns = [
     {
       title: "Name",
@@ -191,13 +194,10 @@ const AdminDashBoard = () => {
       </Row>
     </div>*/
     <div>
-      {loading ? (
-        <Loader />
-      ) : error ? (
-        <h3>{error}</h3>
-      ) : (
-        <Table color='red' columns={mycolumns} dataSource={clients} />
-      )}
+      {message && <Message variant='danger'>{message}</Message>}
+      {error && <Message variant='danger'>{error}</Message>}
+      {loading && <Loader />}
+      <Table color='red' columns={mycolumns} dataSource={clients} />
     </div>
   );
 };

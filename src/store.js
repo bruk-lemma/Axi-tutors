@@ -5,11 +5,12 @@ import {
   clientListReducer,
   clientRegisterReducer,
 } from "./reducers/clientListReducer";
-import {userLoginReducer} from "./reducers/userReducer.js";
+import {userLoginReducer, userRegisterReducer} from "./reducers/userReducer.js";
 const reducer = combineReducers({
   clientList: clientListReducer,
   clientRegister: clientRegisterReducer,
   userLogin: userLoginReducer,
+  userRegister: userRegisterReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
@@ -18,6 +19,7 @@ const userInfoFromStorage = localStorage.getItem("userInfo")
 
 const initialState = {
   userLogin: {userInfo: userInfoFromStorage},
+  userRegister: {userInfo: userInfoFromStorage},
 };
 const middleware = [thunk];
 

@@ -8,11 +8,24 @@ import {
 } from "../constants/clientConstants.js";
 import axios from "axios";
 
-export const listClients = () => async (dispatch) => {
+export const listClients = () => async (dispatch, getState) => {
   try {
     dispatch({type: CLIENT_LIST_REQUEST});
 
-    const {data} = await axios.get("http://127.0.0.1:9000/api/v1/clients");
+    const {
+      userLogin: {userInfo},
+    } = getState();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const {data} = await axios.get(
+      "http://127.0.0.1:9000/api/v1/clients",
+      config
+    );
 
     dispatch({
       type: CLIENT_LIST_SUCCESS,
