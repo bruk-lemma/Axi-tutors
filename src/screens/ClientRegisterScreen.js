@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useLocation, useNavigate} from "react-router-dom";
 import {registerClient} from "../actions/clientActions.js";
+import Loader from "../components/Loader.js";
+import Message from "../components/Message.js";
 const ClientRegisterScreen = () => {
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
@@ -11,6 +13,7 @@ const ClientRegisterScreen = () => {
   const [sub_city, setSubCity] = useState("");
   const [child_gender, setChildGender] = useState("");
   const [child_grade, setChildGrade] = useState("");
+  const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
   const clientRegister = useSelector((state) => state.clientRegister);
@@ -27,6 +30,9 @@ const ClientRegisterScreen = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if (error) {
+      setMessage(`invalid input....${error}`);
+    }
     dispatch(
       registerClient(
         first_name,
@@ -61,6 +67,9 @@ const ClientRegisterScreen = () => {
               </p>
             </div>
           </div>
+          {message && <Message variant='danger'>{message}</Message>}
+          {error && <Message variant='danger'>{error}</Message>}
+          {loading && <Loader />}
           <div className='mt-5 md:col-span-2 md:mt-0'>
             <form onSubmit={submitHandler} action='#' method='POST'>
               <div className='overflow-hidden shadow sm:rounded-md'>
