@@ -11,6 +11,7 @@ import TeacherRegisterScreen from "./screens/TeacherRegisterScreen";
 //import Header from "./components/header.js";
 import MenuNav from "./components/Menu.js";
 import AdminDashBoard from "./screens/AdminDashBoard";
+import AdminDashboardTeachers from "./screens/AdminDashboardTeachers";
 import LoginScreen from "./screens/LoginScreen";
 import Hero from "./components/Hero";
 import SignInScreen from "./screens/SignInScreen.js";
@@ -31,6 +32,8 @@ function App() {
             <Route exact path='/login' element={<LoginScreen />} />
             <Route exact path='/hero' element={<Hero />} />
             <Route exact path='/admin' element={<AdminDashBoard />} />
+            <Route exact path='/admint' element={<AdminDashboardTeachers />} />
+
             <Route exact path='/signin' element={<SignInScreen />} />
           </Routes>
         </Container>
