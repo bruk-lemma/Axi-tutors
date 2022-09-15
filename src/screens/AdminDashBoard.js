@@ -152,47 +152,8 @@ const AdminDashBoard = () => {
   useEffect(() => {
     dispatch(listClients());
   }, [dispatch]);
-  // console.log(clients);
-  /* <Table columns={columns} dataSource={data} />;*/
+
   return (
-    /* <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>address</th>
-          <th>phone number</th>
-        </tr>
-      </thead>
-      <tbody>
-        {clients.map((client) => (
-          <tr>
-            <td>{client.first_name}</td>
-            <td>{client.last_name}</td>
-            <td>{client.address}</td>
-            <td>{client.phone_number}</td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
-*/
-    /* <>
-      {clients.map((p) => (
-        <Row>
-          <Col> {p.address}</Col>
-        </Row>
-      ))}
-    </>*/
-    /*<div>
-      <h1>latest</h1>
-      <Row>
-        {clients.map((client) => (
-          <Col key={client.address} sm={12} lg={4} xl={3}>
-            <h1>{client.address}</h1>
-          </Col>
-        ))}
-      </Row>
-    </div>*/
     <div>
       {message && <Message variant='danger'>{message}</Message>}
       {error && <Message variant='danger'>{error}</Message>}

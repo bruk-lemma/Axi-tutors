@@ -6,11 +6,17 @@ import {
   clientRegisterReducer,
 } from "./reducers/clientListReducer";
 import {userLoginReducer, userRegisterReducer} from "./reducers/userReducer.js";
+import {
+  teacherListReducer,
+  teacherRegisterReducer,
+} from "./reducers/teacherReducer.js";
 const reducer = combineReducers({
   clientList: clientListReducer,
   clientRegister: clientRegisterReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
+  teacherList: teacherListReducer,
+  teacherRegister: teacherRegisterReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
