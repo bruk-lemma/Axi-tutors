@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import "antd/dist/antd.css";
-import {Col, Row, Space, Table, Tag} from "antd";
+import {Row, Table} from "antd";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {listClients} from "../actions/clientActions.js";
+import {deleteClient, listClients} from "../actions/clientActions.js";
 //import {Table} from "react-bootstrap";
 import Loader from "../components/Loader.js";
 import Message from "../components/Message.js";
@@ -17,12 +17,19 @@ const AdminDashBoard = () => {
 
   const {loading, error, clients} = clientList;
 
+  const handleDelete = (k) => {
+    // e.preventDefault();
+    console.log(k);
+    dispatch(deleteClient(k));
+    dispatch(listClients());
+  };
+
   const mycolumns = [
     {
       title: "First name",
       dataIndex: "first_name",
       key: "first_name",
-      render: (text) => <a>{text}</a>,
+      render: (text) => <p>{text}</p>,
     },
     {
       title: "Last Name",
@@ -40,13 +47,13 @@ const AdminDashBoard = () => {
       title: "phone_number",
       dataIndex: "phone_number",
       key: "phone_number",
-      render: (text) => <a>+{text}</a>,
+      render: (text) => <p>+{text}</p>,
     },
     {
       title: "child_grade",
       dataIndex: "child_grade",
       key: "child_grade",
-      render: (text) => <a>{text}</a>,
+      render: (text) => <p>{text}</p>,
     },
     {
       title: "child_gender",
@@ -54,8 +61,31 @@ const AdminDashBoard = () => {
       key: "child_gender",
       render: (text) => <a>{text}</a>,
     },
+    {
+      title: "Action",
+      dataIndex: "",
+      key: "x",
+      render: (text, record) => (
+        <a
+          href='#'
+          background-Color='blue'
+          //onClick={handleDelete(record.first_name)}
+        >
+          Update
+        </a>
+      ),
+    },
+    {
+      title: "operation",
+      dataIndex: "operation",
+      render: (text, record) => (
+        <a href='#' onClick={() => handleDelete(record.first_name)}>
+          Delete
+        </a>
+      ),
+    },
   ];
-
+  /*
   const datam = [
     clients.map((client) => ({
       key: client._id,
@@ -64,8 +94,10 @@ const AdminDashBoard = () => {
       address: client.address,
     })),
   ];
-  console.log(datam);
-  console.log(clients);
+  */
+  //console.log(datam);
+  //console.log(clients);
+
   useEffect(() => {
     dispatch(listClients());
   }, [dispatch]);

@@ -5,6 +5,9 @@ import {
   CLIENT_REGISTER_REQUEST,
   CLIENT_REGISTER_SUCCESS,
   CLIENT_REGISTER_FAIL,
+  CLIENT_DELETE_REQUEST,
+  CLIENT_DELETE_SUCCESS,
+  CLIENT_DELETE_FAIL,
 } from "../constants/clientConstants.js";
 import axios from "axios";
 
@@ -91,3 +94,28 @@ export const registerClient =
       });
     }
   };
+
+export const deleteClient = (first_name) => async (dispatch) => {
+  try {
+    dispatch({type: CLIENT_DELETE_REQUEST, payload: first_name});
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const {data} = await axios.delete(
+      `http://127.0.0.1:9000/api/v1/clients/${first_name}`,
+      {first_name},
+      config
+    );
+    dispatch({type: CLIENT_DELETE_SUCCESS, payload: data});
+  } catch (error) {
+    dispatch({
+      type: CLIENT_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

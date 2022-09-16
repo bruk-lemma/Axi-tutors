@@ -5,6 +5,9 @@ import {
   CLIENT_REGISTER_REQUEST,
   CLIENT_REGISTER_SUCCESS,
   CLIENT_REGISTER_FAIL,
+  CLIENT_DELETE_REQUEST,
+  CLIENT_DELETE_SUCCESS,
+  CLIENT_DELETE_FAIL,
 } from "../constants/clientConstants";
 
 export const clientListReducer = (state = {clients: []}, action) => {
@@ -27,6 +30,19 @@ export const clientRegisterReducer = (state = {}, action) => {
     case CLIENT_REGISTER_SUCCESS:
       return {loading: false, clients: action.payload};
     case CLIENT_REGISTER_FAIL:
+      return {loading: false, error: action.payload};
+    default:
+      return state;
+  }
+};
+
+export const clientDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case CLIENT_DELETE_REQUEST:
+      return {loading: true, clients: []};
+    case CLIENT_DELETE_SUCCESS:
+      return {loading: false, clients: action.payload};
+    case CLIENT_DELETE_FAIL:
       return {loading: false, error: action.payload};
     default:
       return state;

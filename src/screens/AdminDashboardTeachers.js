@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import {listTeachers} from "../actions/teacherActions.js";
+import {deleteClient} from "../actions/clientActions.js";
 
 const AdminDashboardTeachers = () => {
   const dispatch = useDispatch();
@@ -69,6 +70,11 @@ const AdminDashboardTeachers = () => {
     dispatch(listTeachers());
     //console.log(teachers);
   }, [dispatch]);
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    dispatch(deleteClient());
+  };
 
   return (
     <div>

@@ -22,7 +22,7 @@ function App() {
       <main className='py-3'>
         <Container>
           <Routes>
-            <Route exact path='/' element={<AdminDashBoard />} />
+            <Route exact path='/' element={<Hero />} />
             <Route exact path='/registerc' element={<ClientRegisterScreen />} />
             <Route
               exact

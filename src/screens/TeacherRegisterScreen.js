@@ -44,6 +44,7 @@ const TeacherRegisterScreen = () => {
         teacher_education_level,
         teacher_tutor_subjects
       )
+      
     );
 
     console.log("teacher Registered...");
