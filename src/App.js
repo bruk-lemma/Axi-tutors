@@ -15,6 +15,7 @@ import AdminDashboardTeachers from "./screens/AdminDashboardTeachers";
 import LoginScreen from "./screens/LoginScreen";
 import Hero from "./components/Hero";
 import SignInScreen from "./screens/SignInScreen.js";
+import ClientUpdateScreen from "./screens/ClientUpdateScreen.js";
 function App() {
   return (
     <Router>
@@ -35,6 +36,7 @@ function App() {
             <Route exact path='/admint' element={<AdminDashboardTeachers />} />
 
             <Route exact path='/signin' element={<SignInScreen />} />
+            <Route exact path='/update' element={<ClientUpdateScreen />} />
           </Routes>
         </Container>
       </main>

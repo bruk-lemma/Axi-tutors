@@ -1,12 +1,19 @@
 import React, {useState} from "react";
 import "antd/dist/antd.css";
-import {Row, Table} from "antd";
+import {Popconfirm, Empty, Row, Statistic, Table} from "antd";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteClient, listClients} from "../actions/clientActions.js";
+import {
+  deleteClient,
+  listClients,
+  updateClient,
+  getClient,
+} from "../actions/clientActions.js";
 //import {Table} from "react-bootstrap";
 import Loader from "../components/Loader.js";
 import Message from "../components/Message.js";
+import {Container} from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
 
 const AdminDashBoard = () => {
   const [message, setMessage] = useState(null);
@@ -24,6 +31,19 @@ const AdminDashBoard = () => {
     dispatch(listClients());
   };
 
+  const navigate = useNavigate();
+
+  const handleUpdate = (id) => {
+    dispatch(getClient(id));
+
+    navigate("/update");
+    // console.log("client update ....");
+  };
+
+  useEffect(() => {
+    dispatch(listClients());
+  }, [dispatch]);
+
   const mycolumns = [
     {
       title: "First name",
@@ -35,19 +55,27 @@ const AdminDashBoard = () => {
       title: "Last Name",
       dataIndex: "last_name",
       key: "last_name",
-      render: (text) => <p>{text}</p>,
+      render: (text, record) => <p>{record.last_name}</p>,
     },
-    {
-      title: "address",
-      dataIndex: "address",
-      key: "address",
-      render: (text) => <a>{text}</a>,
-    },
+
     {
       title: "phone_number",
       dataIndex: "phone_number",
       key: "phone_number",
       render: (text) => <p>+{text}</p>,
+    },
+
+    {
+      title: "city",
+      dataIndex: "city",
+      key: "city",
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: "sub_city",
+      dataIndex: "sub_city",
+      key: "sub_city",
+      render: (text) => <a>{text}</a>,
     },
     {
       title: "child_grade",
@@ -69,7 +97,7 @@ const AdminDashBoard = () => {
         <a
           href='#'
           background-Color='blue'
-          //onClick={handleDelete(record.first_name)}
+          onClick={() => handleUpdate(record.id)}
         >
           Update
         </a>
@@ -79,9 +107,13 @@ const AdminDashBoard = () => {
       title: "operation",
       dataIndex: "operation",
       render: (text, record) => (
-        <a href='#' onClick={() => handleDelete(record.first_name)}>
-          Delete
-        </a>
+        <Popconfirm
+          title='Sure to delete?'
+          //on{() => handleDelete(record.key)}
+          onConfirm={() => handleDelete(record.first_name)}
+        >
+          <a href='#'>Delete</a>
+        </Popconfirm>
       ),
     },
   ];
@@ -98,16 +130,20 @@ const AdminDashBoard = () => {
   //console.log(datam);
   //console.log(clients);
 
-  useEffect(() => {
-    dispatch(listClients());
-  }, [dispatch]);
-
   return (
     <div>
       {message && <Message variant='danger'>{message}</Message>}
       {error && <Message variant='danger'>{error}</Message>}
       {loading && <Loader />}
-      <Table color='red' columns={mycolumns} dataSource={clients} />
+      {clients.length <= 0 || !clients ? (
+        <Container>
+          {" "}
+          <Empty />
+        </Container>
+      ) : (
+        <Table color='red' columns={mycolumns} dataSource={clients} />
+      )}
+      <Statistic title='Total Clients' value={clients.length} />
     </div>
   );
 };

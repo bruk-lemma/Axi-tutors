@@ -71,10 +71,7 @@ const AdminDashboardTeachers = () => {
     //console.log(teachers);
   }, [dispatch]);
 
-  const handleDelete = (e) => {
-    e.preventDefault();
-    dispatch(deleteClient());
-  };
+
 
   return (
     <div>

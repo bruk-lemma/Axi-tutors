@@ -8,8 +8,15 @@ import {
   CLIENT_DELETE_REQUEST,
   CLIENT_DELETE_SUCCESS,
   CLIENT_DELETE_FAIL,
+  CLIENT_UPDATE_REQUEST,
+  CLIENT_UPDATE_SUCCESS,
+  CLIENT_UPDATE_FAIL,
+  CLIENT_GET_DETAILS_REQUEST,
+  CLIENT_GET_DETAILS_SUCCESS,
+  CLIENT_GET_DETAILS_FAIL,
 } from "../constants/clientConstants.js";
 import axios from "axios";
+import {Navigate, useNavigate} from "react-router-dom";
 
 export const listClients = () => async (dispatch, getState) => {
   try {
@@ -119,3 +126,134 @@ export const deleteClient = (first_name) => async (dispatch) => {
     });
   }
 };
+/*
+export const updateClient =
+  (
+    first_name,
+    last_name,
+    email,
+    phone_number,
+    city,
+    sub_city,
+    child_grade,
+    child_gender
+  ) =>
+  async (dispatch) => {
+    try {
+      dispatch({type: CLIENT_UPDATE_REQUEST, payload: first_name});
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const {data} = await axios.patch(
+        `http://127.0.0.1:9000/api/v1/clients/${first_name}`,
+        {
+          first_name,
+          last_name,
+          email,
+          phone_number,
+          city,
+          sub_city,
+          child_grade,
+          child_gender,
+        },
+        config
+      );
+      dispatch({type: CLIENT_UPDATE_SUCCESS, payload: data});
+    } catch (error) {
+      dispatch({
+        type: CLIENT_UPDATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+*/
+export const getClient = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({type: CLIENT_GET_DETAILS_REQUEST});
+
+    const {
+      userLogin: {userInfo},
+    } = getState();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        //Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const {data} = await axios.get(
+      `http://127.0.0.1:9000/api/v1/clients/${id}`,
+      config
+    );
+
+    dispatch({
+      type: CLIENT_GET_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CLIENT_GET_DETAILS_FAIL,
+      payload:
+        error.response && error.response.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const updateClient =
+  (
+    id,
+    {
+      first_name,
+      last_name,
+      email,
+      phone_number,
+      city,
+      sub_city,
+      child_grade,
+      child_gender,
+    }
+  ) =>
+  async (dispatch) => {
+    //const navigate = useNavigate();
+    // navigate("/update");
+    try {
+      dispatch({
+        type: CLIENT_UPDATE_REQUEST,
+      });
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const {data} = await axios.patch(
+        `http://127.0.0.1:9000/api/v1/clients/${id}`,
+        {
+          first_name,
+          last_name,
+          email,
+          phone_number,
+          city,
+          sub_city,
+          child_grade,
+          child_gender,
+        },
+        config
+      );
+      dispatch({type: CLIENT_UPDATE_SUCCESS, payload: data});
+    } catch (error) {
+      dispatch({
+        type: CLIENT_UPDATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
