@@ -14,6 +14,7 @@ import Loader from "../components/Loader.js";
 import Message from "../components/Message.js";
 import {Container} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
+import {login} from "../actions/userActions.js";
 
 const AdminDashBoard = () => {
   const [message, setMessage] = useState(null);
@@ -21,7 +22,8 @@ const AdminDashBoard = () => {
   const dispatch = useDispatch();
 
   const clientList = useSelector((state) => state.clientList);
-
+  const userLogin = useSelector((state) => state.userLogin);
+  const {userInfo} = userLogin;
   const {loading, error, clients} = clientList;
 
   const handleDelete = (k) => {
@@ -39,10 +41,18 @@ const AdminDashBoard = () => {
     navigate("/update");
     // console.log("client update ....");
   };
-
+  /*
+  if (userInfo.data.user.role !== "admin") {
+    navigate("/login");
+  }
+*/
   useEffect(() => {
+    if (!userInfo || userInfo.data.user.role !== "admin") {
+      //navigate("/login");
+      // dispatch(login("", ""));
+    }
     dispatch(listClients());
-  }, [dispatch]);
+  }, [dispatch, userInfo, navigate]);
 
   const mycolumns = [
     {
@@ -96,7 +106,7 @@ const AdminDashBoard = () => {
       render: (text, record) => (
         <a
           href='#'
-          background-Color='blue'
+          // background-Color='blue'
           onClick={() => handleUpdate(record.id)}
         >
           Update
@@ -117,33 +127,17 @@ const AdminDashBoard = () => {
       ),
     },
   ];
-  /*
-  const datam = [
-    clients.map((client) => ({
-      key: client._id,
-      first_name: client.first_name,
-      last_name: client.last_name,
-      address: client.address,
-    })),
-  ];
-  */
-  //console.log(datam);
-  //console.log(clients);
 
   return (
     <div>
-      {message && <Message variant='danger'>{message}</Message>}
-      {error && <Message variant='danger'>{error}</Message>}
-      {loading && <Loader />}
-      {clients.length <= 0 || !clients ? (
+      {!error ? (
         <Container>
-          {" "}
-          <Empty />
+          {loading && <Loader />}
+          <Table color='red' columns={mycolumns} dataSource={clients} />
         </Container>
       ) : (
-        <Table color='red' columns={mycolumns} dataSource={clients} />
+        <Message variant='danger'>{error}</Message>
       )}
-      <Statistic title='Total Clients' value={clients.length} />
     </div>
   );
 };

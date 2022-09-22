@@ -20,18 +20,23 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const {loading, error, userInfo} = userLogin;
+  //const {data} = userInfo;
+  //console.log(data);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo && userInfo.data.user.role === "admin") {
       navigate("/admin");
     }
+    // <Message>Not authorized</Message>;
+    //navigate("/login");
+    // dispatch(login(" ", " "));
   }, [navigate, userInfo]);
 
   const submitHandler = (e) => {
     // e.preventDefault();
     if (error) {
-      setMessage(`invalid input....${error}`);
+      setMessage(`${error}`);
     }
     console.log(error);
     dispatch(login(email, password));
@@ -43,9 +48,9 @@ const LoginScreen = () => {
   return (
     <Card>
       <h3>Login</h3>
+      {message && <Message variant='danger'>{message}</Message>}
+      {loading && <Loader />}
       <Form name='normal_login' className='login-form'>
-        {message && <Message variant='danger'>{message}</Message>}
-        {loading && <Loader />}
         <Form.Item
           name='email'
           rules={[

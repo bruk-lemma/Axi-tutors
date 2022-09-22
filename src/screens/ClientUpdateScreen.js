@@ -62,6 +62,8 @@ const ClientUpdateScreen = () => {
         child_grade,
       })
     );
+
+    navigate("/admin");
   };
 
   return (

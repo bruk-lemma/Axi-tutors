@@ -9,10 +9,10 @@ import {Popover, Transition} from "@headlessui/react";
 import {Bars3Icon, XMarkIcon} from "@heroicons/react/24/outline";
 
 const navigation = [
-  {name: "Product", href: "#"},
-  {name: "Features", href: "#"},
-  {name: "Marketplace", href: "#"},
-  {name: "Company", href: "#"},
+  {name: "Home", href: "#"},
+  {name: "Register", href: "#"},
+  {name: "Contact", href: "#"},
+  {name: "About", href: "#"},
 ];
 const Header = () => {
   return (

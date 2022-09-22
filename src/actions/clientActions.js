@@ -17,11 +17,13 @@ import {
 } from "../constants/clientConstants.js";
 import axios from "axios";
 import {Navigate, useNavigate} from "react-router-dom";
+import {USER_LOGIN_REQUEST} from "../constants/userConstants.js";
 
 export const listClients = () => async (dispatch, getState) => {
+  //const navigate = useNavigate();
+
   try {
     dispatch({type: CLIENT_LIST_REQUEST});
-
     const {
       userLogin: {userInfo},
     } = getState();
@@ -29,26 +31,28 @@ export const listClients = () => async (dispatch, getState) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
+        role: `${userInfo.data.user.role}`,
       },
     };
+    console.log(userInfo.data.user.role);
 
     const {data} = await axios.get(
       "http://127.0.0.1:9000/api/v1/clients",
       config
     );
+    //console.log(data);
 
     dispatch({
       type: CLIENT_LIST_SUCCESS,
       payload: data,
     });
   } catch (error) {
+    //console.log(error.response.message.data);
     dispatch({
       type: CLIENT_LIST_FAIL,
-      payload:
-        error.response && error.response.message
-          ? error.response.data.message
-          : error.message,
+      payload: "unauthorized user",
     });
+    // navigate("/login");
   }
 };
 
@@ -102,12 +106,18 @@ export const registerClient =
     }
   };
 
-export const deleteClient = (first_name) => async (dispatch) => {
+export const deleteClient = (first_name) => async (dispatch, getState) => {
   try {
     dispatch({type: CLIENT_DELETE_REQUEST, payload: first_name});
+
+    const {
+      userLogin: {userInfo},
+    } = getState();
     const config = {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+        role: `${userInfo.data.user.role}`,
       },
     };
     const {data} = await axios.delete(
